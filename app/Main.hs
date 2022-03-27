@@ -8,7 +8,7 @@
 module Main where
                
 
-import           Codec.Archive.Zip (createArchive,mkEntrySelector,addEntry,CompressionMethod (..))
+import           Codec.Archive.Zip (createArchive,withArchive,unpackInto,mkEntrySelector,addEntry,getEntry,CompressionMethod (..))
 import qualified Control.Exception as E
 import qualified Data.ByteString.Internal as IB
 import qualified Data.ByteString.Lazy as B
@@ -50,6 +50,12 @@ main = do
     let summary = (countText.getCounts) input
     TI.appendFile "stat.dat" (mconcat [T.pack fileName,"",summary,"\n"])
     TI.putStrLn summary
-    
     s      <- mkEntrySelector "xapi-example_1.json"
     createArchive "C:/Users/arhuoje/haskell/zip1/app/zip/xapi-example_1.zip" (addEntry Deflate binary s)
+    withArchive "C:/Users/arhuoje/haskell/zip1/app/zip/xapi-example_1.zip" (unpackInto "C:/Users/arhuoje/haskell/zip1/app/zip/")
+   
+    
+    --c        <- mkEntrySelector "xapi-example_1.zip"
+    --  let destDir = "C:/Users/arhuoje/haskell/zip1/app/zip/" 
+     
+          
